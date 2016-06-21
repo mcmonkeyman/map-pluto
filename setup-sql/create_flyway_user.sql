@@ -1,0 +1,3 @@
+BEGIN;
+    CREATE USER flyway WITH PASSWORD 'flyway';
+COMMIT;
