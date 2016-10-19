@@ -90,7 +90,7 @@ BEGIN;
         mappluto_f smallint,
         shape_leng numeric,
         shape_area numeric,
-        geom public.geometry(MultiPolygon,2263)
+        geom geometry(MultiPolygon,2263)
     );
 
     DROP SEQUENCE IF EXISTS raw.map_history_gid_seq;

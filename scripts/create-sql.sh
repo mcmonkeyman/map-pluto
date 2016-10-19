@@ -17,7 +17,7 @@ ZIP_DIR="$DATA_DIR/zip"
 SHP_DIR="$DATA_DIR/shp"
 DEST_DIR="$DATA_DIR/sql"
 
-# Cleanup  
+# Cleanup
 printf "\n-----> Removing $SHP_DIR/*, if it exists...\n\n"
 if [ -d "$SHP_DIR" ]; then
     rm -rf $SHP_DIR
@@ -29,7 +29,7 @@ if [ -d "$DEST_DIR" ]; then
     rm -rf $DEST_DIR
 fi
 
-mkdir -p $ZIP_DIR 
+mkdir -p $ZIP_DIR
 mkdir -p $SHP_DIR
 mkdir -p $DEST_DIR
 
@@ -42,14 +42,18 @@ do
 	time unzip $filename *.dbf -d $SHP_DIR/
 done
 
+
 # convert shapefile to psql copy command (requires postgis package)
 printf "\n-----> Converting .shp to a PostgreSQL-compatible dump with shp2pgsql...\n\n"
+
+COUNTER=3
 for filename in `find $SHP_DIR -name "*.shp" -print`
 do
     TIME_STAMP=$(date +%Y_%m_%d.%H.%M.%S)
-    FILE_SUFFIX=`basename $filename .shp`".sql"
-    FILE_NAME="V"$TIME_STAMP"__"$FILE_SUFFIX
+    FILE_BASENAME=`basename $filename .shp`
+    FILE_NAME="V"$COUNTER"__"$FILE_BASENAME"_"$TIME_STAMP".sql"
     time shp2pgsql -a -s 2263 -D -g geom -N abort $filename $SRC_SCHEMA.$SRC_TABLE >> $DEST_DIR/$FILE_NAME
+    let COUNTER=COUNTER+1
 done
 
 printf "\n-----> Files created...\n\n"

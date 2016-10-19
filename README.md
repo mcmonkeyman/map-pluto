@@ -3,7 +3,8 @@
 
 These scripts are used to process pluto map data into a freshly created db.
 
-The raw data source can be found here: http://www1.nyc.gov/site/planning/data-maps/open-data/pluto-mappluto-archive.page
+The raw data source can be found here:
+[http://www1.nyc.gov/site/planning/data-maps/open-data/pluto-mappluto-archive.page](http://www1.nyc.gov/site/planning/data-maps/open-data/pluto-mappluto-archive.page)
 
 
 # Requirements
@@ -13,43 +14,36 @@ The raw data source can be found here: http://www1.nyc.gov/site/planning/data-ma
 ```
 brew install postgres
 brew install postgis
+brew install flyway
 ```
 
 # Running
 
 
-#### 1. Create the user, schema, db and grant permissions. 
+#### 1. Create the user, schema, db and grant permissions.
 
 ```
-psql -U postgres -f ./setup-sql/create_flyway_user.sql
-psql -U postgres -f ./setup-sql/create_pluto_db.sql
-psql -U postgres -d pluto -f ./setup-sql/create_raw_schema.sql
-psql -U postgres -d pluto -f ./setup-sql/set-permissions.sql
-psql -U postgres -d pluto -f ./setup-sql/add_postgis_extension.sql
+sh ./setup-db/runall.sh
 ```
 
 #### 2. Create the sql to load the data
 
-The load migrations actually load the data into the db, as apposed to the schema migrations. They
-were created using the bash scripts in the `./scripts` folder. You can optionally
-re-run them using the commands below. 
-
 ```
-./scripts/download-zip.sh
-./scripts/create-sql.sh
+sh ./scripts/generate-pluto-data.sh
 ```
 
-The outputted files will be in the `./data` folder so make sure they look good and 
-move them to the sql folder.
+This script downloads the zip file, generates the sql migratations for the
+pluto data and moves the migrations to the sql folder.
+
+The outputted files will be in the `./sql` folder in th form.
 
 ```
-mv ./data/sql/* ./sql/
 ```
 
 #### 3. Run the sql migrations to create the db and load the data
 
 ```
-./scripts/load-sql.sh
+flyway -configFile=./conf/flyway.conf -X "-Xms1024M -Xmx4096M" migrate
 ```
 
 
