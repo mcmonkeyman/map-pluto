@@ -51,4 +51,7 @@ sql/V7__SIMapPLUTO_2016_10_18.07.47.46.sql
 flyway -configFile=./conf/flyway.conf -X "-Xms1024M -Xmx4096M" migrate
 ```
 
+#### 4. Optionally create a elasticsearch index
 
+The code in the ./elasticsearch folder can be used to create and index by 
+using the river jdbc project.
