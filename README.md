@@ -38,11 +38,11 @@ pluto data and moves the migrations to the sql folder.
 The outputted files will be in the `./sql` folder in the form.
 
 ```
-        sql/V3__BXMapPLUTO_2016_10_18.07.46.52.sql
-        sql/V4__BKMapPLUTO_2016_10_18.07.46.59.sql
-        sql/V5__MNMapPLUTO_2016_10_18.07.47.19.sql
-        sql/V6__QNMapPLUTO_2016_10_18.07.47.22.sql
-        sql/V7__SIMapPLUTO_2016_10_18.07.47.46.sql
+sql/V3__BXMapPLUTO_2016_10_18.07.46.52.sql
+sql/V4__BKMapPLUTO_2016_10_18.07.46.59.sql
+sql/V5__MNMapPLUTO_2016_10_18.07.47.19.sql
+sql/V6__QNMapPLUTO_2016_10_18.07.47.22.sql
+sql/V7__SIMapPLUTO_2016_10_18.07.47.46.sql
 ```
 
 #### 3. Run the sql migrations to create the db and load the data
